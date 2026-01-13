@@ -1,0 +1,44 @@
+请帮我完成如下需求：
+”
+    我现在成功通过xelatex编译”CjC_template_tex.tex“得到了”CjC_template_tex.pdf“，但是”\ref“命令似乎没有正常运作。
+
+    例如，”data\experiment.tex“中有如下代码：
+
+        ”
+        ......
+        \begin{figure}[H]
+            \centerline{\includegraphics[width=3.15in,height=1.98in]{fig/深度学习/输入数据/Figure_1.png}}
+            \label{fig_q_and_mul_minst}
+            {\zihao{5}图X\quad  MINST模型质量与噪声乘量}
+        \end{figure}
+
+        首先考察图\ref{fig_q_and_mul_minst}，图中横轴为训练用数据所添加的噪声乘量
+        ......“
+
+    但是编译后的pdf中，”图X“中的”X“并没有被正确替换为图的编号，而是显示为图？？，请帮我解决这个引用问题
+“
+
+
+我现在有如下需求：
+”
+    请修改”data\experiment.tex“中的代码，使得在编译后的pdf中插入一幅跨栏图片。图片插入位置为“{\heiti \subsection{实验设置}}”之后，且位于pdf的顶部。
+
+    跨栏图片包含8张子图，左边四张子图在左栏，右边四张子图在右栏，左栏和右栏的图片分布均为田字形（2*2）。每张子图路径均为”fig\占位符\占位符.pdf“
+
+“
+
+我现在有如下需求：
+
+    请修改”data\experiment.tex“中的代码，使得在编译后的pdf中插入一幅跨栏图片。图片插入位置为{\heiti \subsection{数据交易模拟实验结果}}之后，且位于pdf顶部
+
+    跨栏图片包含9张子图，呈现为3*3的格式，每张子图路径均为”fig\占位符\占位符.pdf“
+    
+    竖排分别为l1,l2,minst，横排为不同的变量（doi，c，cdoi）
+
+我现在有如下需求：
+
+    把所有utility_doi的图放在一起，
+
+我现在有如下需求：
+
+    为

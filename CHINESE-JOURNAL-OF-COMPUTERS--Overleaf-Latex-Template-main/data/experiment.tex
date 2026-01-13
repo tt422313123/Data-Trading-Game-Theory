@@ -1,0 +1,253 @@
+\section{\heiti 数学实验}
+{\heiti \subsection{实验设置}}
+\begin{figure*}[t]
+	\centering
+	\begin{minipage}{0.45\textwidth}
+		\centering
+		\subfigure[]{
+			\includegraphics[width=0.9\linewidth]{figures/MSE_Exponential_short_Fitting.pdf}
+		}
+		\\
+		\subfigure[]{
+			\includegraphics[width=0.9\linewidth]{figures/MSE_Fitting.pdf}
+		}
+	\end{minipage}
+	\hfill
+	\begin{minipage}{0.45\textwidth}
+		\centering
+		\subfigure[]{
+			\includegraphics[width=0.9\linewidth]{figures/R2_Exponential_short_Fitting.pdf}
+		}
+		\\
+		\subfigure[]{
+			\includegraphics[width=0.9\linewidth]{figures/R2_Fitting.pdf}
+		}
+	\end{minipage}
+	\caption{跨栏图片示例}
+	\label{fig:cross_column_example}
+\end{figure*}
+为了全方位考察保护隐私的数据市场机制，
+%本次模拟实验使用YEARMSD、POWER、 SUSY、MINST数据集模拟数据拥有者拥有的数据，模拟数据拥有者和服务提供者在数据出售阶段的博弈。各个数据集的详细信息如下表\ref{table_datasets2}所示：
+本次实验使用YEARMSD和MINST数据集模拟数据拥有者拥有的数据，模拟数据拥有者和服务提供者在数据出售阶段的博弈。各个数据集的详细信息如下表\ref{table_datasets}所示：
+
+\begin{comment}
+	\begin{table}[H]
+		\centering {\heiti 表X\quad 数据集详细信息}
+		% \caption{表说明 *表说明采用黑体*}
+		\vspace {-2.5mm}
+		\begin{center}
+			\begin{tabular}{llll}
+				\toprule
+				数据集&训练方案&训练集大小&测试集大小 \\
+				\hline
+				YearMSD&线性回归&386609&128836
+				\\
+				Power&线性回归&1536960&512320
+				\\
+				SUSY&逻辑回归&3750000&1250000
+				\\
+				MINST&深度学习&60000&10000
+				\\
+				\bottomrule
+			\end{tabular}
+			\label{table_datasets2}
+		\end{center}
+	\end{table}
+\end{comment}
+
+
+\begin{table}[H]
+	\centering
+	\caption{数据集详细信息}
+	\vspace {-2.5mm}
+	\begin{center}
+		\begin{tabular}{llll}
+			\toprule
+			数据集&训练方案&训练集大小&测试集大小 \\
+			\hline
+			YearMSD&线性回归&386609&128836
+			\\
+			MINST&深度学习&60000&10000
+			\\
+			\bottomrule
+		\end{tabular}
+		\label{table_datasets}
+	\end{center}
+\end{table}
+
+为定量模拟数据拥有者和服务提供者在数据购买与模型训练阶段的博弈，本次实验考察了不同噪声添加下的数据所训练的模型质量，定量考察隐私保护与模型质量之间的关系，并进行函数拟合，结果如图\ref{fig_q_and_mul_minst}和\ref{fig_q_and_mul_xianxinghuigui}所示：
+
+
+\begin{figure}[H]
+	\centerline{\includegraphics[width=3.15in,height=1.98in]{figures/fit_result_dnn.pdf}}
+	\caption{MINST模型质量与噪声乘量}
+	\label{fig_q_and_mul_minst}
+\end{figure}
+
+首先考察图\ref{fig_q_and_mul_minst}，图中横轴为训练用数据所添加的噪声乘量$mul$，$mul$越高，说明数据所添加的扰动强度越高，数据的隐私保护效果越好。纵轴为训练出来的模型质量，评判标准为准确率，单位为1\%。
+可以看到，随着噪声增强，模型的质量逐步下降，准确率从最初的97.5\%下降到82.5\%，说明隐私保护与模型质量不可兼得。同时注意到质量-噪声函数总体呈现下凸函数形，随着噪声的增加，准确率下降的速度越来越慢。是因为噪声具有边际效益递减特性：已添加的噪声越多，添加同样的噪声对模型的影响程度越来越小。
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=3.15in,height=1.98in]{fig/线性回归/输入/隐私保护强度-模型质量_线性回归模型.png}
+	\caption{YearPredictionMSD模型质量与噪声系数}
+	\label{fig_q_and_mul_xianxinghuigui}
+\end{figure}
+
+同时我们还使用然后考察了YearPredictionMSD模型质量与噪声系数的关系，见图\ref{fig_q_and_mul_xianxinghuigui}，实验使用高斯差分技术，图中横轴为训练用数据所添加的噪声乘量$\epsilon$的对数值，$\epsilon$越低，说明差分隐私的保护越严格，数据所添加的扰动强度越高，数据的隐私保护效果越好。纵轴为训练出来的模型质量，其中左子图纵轴为$R^2$分数，$R^2$分数越高，说明模型准确率越低，质量越差，右子图为$MSE$分数，$MSE$分数，说明模型质量越好。
+可以看到，随着噪声增强，模型的质量逐步下降。
+
+
+\subsubsection{对比方案}
+实验引入了贪心策略、无质疑策略等策略，并给出它们的伪代码，作为实验的对比机制。
+
+服务提供者购买数据后，将用YEARMSD和POWER数据集训练线性回归模型，使用SUSY训练逻辑回归模型，MINST数据集训练深度学习网络的识图模型。
+
+服务购买者将根据模型的质量和自己的效益函数，购买预测服务。
+{\heiti \subsection{数据交易模拟实验结果}}
+
+\begin{figure*}[t]
+	\centering
+	\subfigure[]{
+		\includegraphics[width=0.3\textwidth]{fig/占位符/占位符.pdf}
+	}
+	\subfigure[]{
+		\includegraphics[width=0.3\textwidth]{fig/占位符/占位符.pdf}
+	}
+	\subfigure[]{
+		\includegraphics[width=0.3\textwidth]{fig/占位符/占位符.pdf}
+	}
+	\\
+	\subfigure[]{
+		\includegraphics[width=0.3\textwidth]{fig/占位符/占位符.pdf}
+	}
+	\subfigure[]{
+		\includegraphics[width=0.3\textwidth]{fig/占位符/占位符.pdf}
+	}
+	\subfigure[]{
+		\includegraphics[width=0.3\textwidth]{fig/占位符/占位符.pdf}
+	}
+	\\
+	\subfigure[]{
+		\includegraphics[width=0.3\textwidth]{fig/占位符/占位符.pdf}
+	}
+	\subfigure[]{
+		\includegraphics[width=0.3\textwidth]{fig/占位符/占位符.pdf}
+	}
+	\subfigure[]{
+		\includegraphics[width=0.3\textwidth]{fig/占位符/占位符.pdf}
+	}
+	\caption{跨栏图片示例}
+	\label{fig:cross_column_3x3}
+\end{figure*}
+
+\subsubsection{案例说明}
+在深度学习模型的实验中，假定数据购买方的有5类，购买方的收益函数为$f=a_j\cdot(1-e^{-b_j\cdot x})$，$0<j<6$。其中x为模型质量，$a_i$均服从$(50,100)$的均匀分布，$b_j$均服从$(0.5,1.5)$的均匀分布。根据前述实验拟合所得的质量函数为$0.884-0.59\cdot e^{-0.114\cdot x}$，其中x为隐私扰动强度。
+
+%实验采用的F、g、p等数据来自Yin的工作，并进行等比放大以支撑实验。其中F满足边际递减条件，即一阶导>0，二阶导<0。
+\subsubsection{效益评估}
+下面考察深度学习模型的实验结果，其中使用深度学习计算的实验结果详见\ref{fig_result_minst}，其中横轴为出售者的隐私敏感度，纵轴为服务提供者的收益图。图中可以看出，出售者用户隐私敏感度的增加，购买数据的成本急剧上升，传统的最高成本策略所获得的收益很快就不足以支付购买成本，净利润成为了负值。说明在数据市场中需要
+\begin{figure}[H]
+	\centerline{\includegraphics[width=3.15in,height=1.98in]{fig/深度学习/实验结果/隐私敏感度-使用默认q.png}}
+	\caption{MINST模型质量与噪声乘量}
+	\label{fig_result_minst}
+\end{figure}
+\subsubsection{模型准确率评估}
+我们采取了以下三个指标作为实验的测量指标： 
+
+\noindent(1)数据拥有者的诚信程度。
+
+\noindent(2)服务提供者的总收益。
+
+\noindent(3)服务的预测准确度，即服务质量。
+
+\begin{figure}[H]
+	\centerline{\includegraphics[width=3.15in,height=1.98in]{fig/占位符/占位符.eps}}
+	\caption{图片说明 *字体为小5号，图片应为黑白图，图中的子图要有子图说明*}
+	\label{fig1}
+\end{figure}
+
+\begin{figure*}
+	\centering
+	\includegraphics[width=8cm]{fig/占位符/占位符.eps}
+	\label{fig:picture001}
+	\caption{This is a picture.}
+\end{figure*}
+
+\begin{comment}
+	\begin{figure}[H]
+		\hsize=\textwidth
+		\subfigure[Inaccurate map] %第1张子图
+		{
+			\centering
+			\includegraphics[width=0.16\textwidth,height=4.6cm]{fig/占位符/占位符.eps}
+			\includegraphics[width=0.175\textwidth,height=4.6cm]{fig/占位符/占位符.eps}
+			%\label{fig:road}
+			
+			\label{fig:inaccurate}
+		}
+		\subfigure[Different road texture]
+		{
+			\centering
+			\begin{minipage}[b]{0.196\textwidth}
+				\centering
+				\includegraphics[width=1\linewidth,height=2.25cm]{fig/占位符/占位符.eps}\vspace{0.1cm}
+				\includegraphics[width=1\linewidth,height=2.25cm]{fig/占位符/占位符.eps}
+			\end{minipage}
+			\begin{minipage}[b]{0.196\textwidth}
+				\centering
+				\includegraphics[width=1\linewidth,height=2.25cm]{fig/占位符/占位符.eps}\vspace{0.1cm}
+				\includegraphics[width=1\linewidth,height=2.25cm]{fig/占位符/占位符.eps}
+			\end{minipage}
+			%\label{fig:road}
+			\label{fig:road}
+		}  
+		\subfigure[Crossroad] 
+		{
+			\centering
+			\begin{minipage}[b]{0.196\textwidth}
+				\centering
+				\includegraphics[width=1\linewidth,height=2.25cm]{fig/占位符/占位符.eps}\vspace{0.1cm}
+				\includegraphics[width=1\linewidth,height=2.25cm]{fig/占位符/占位符.eps}
+			\end{minipage}
+			\label{fig:crossroad}
+		}
+		\captionsetup[width=\textwidth]{
+			\begin{spacing}{1.0}
+				\footnotesize{ Fig.~1:图片注释} 
+			\end{spacing}
+		}
+		
+	\end{figure}
+	\begin{figure*}
+		\begin{center}
+			\begin{minipage}{0.5\textwidth}
+				\includegraphics[width=1.6in,height=1in]{fig/占位符/占位符.eps}
+				\caption{example3}
+				\label{fig:example3}
+			\end{minipage}
+			\begin{minipage}{0.5\textwidth}
+				\includegraphics[width=1.6in,height=1in]{fig/占位符/占位符.eps}
+				\caption{example4}
+				\label{fig:example4}
+			\end{minipage}
+		\end{center}
+	\end{figure*}
+\end{comment}
+
+\begin{figure*}[ht]
+	\centering
+	\begin{minipage}[b]{0.45\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{fig/占位符/占位符.eps} % 请替换为你的图片文件名
+		\caption{第一个图片}
+		\label{fig:1a}
+	\end{minipage}
+	\hfill
+	\begin{minipage}[b]{0.45\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{fig/占位符/占位符.eps} % 请替换为你的图片文件名
+		\caption{第二个图片}
+		\label{fig:1b}
+	\end{minipage}
+\end{figure*}

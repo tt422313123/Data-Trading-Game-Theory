@@ -1,0 +1,522 @@
+\section{\heiti 市场模型}
+%市场模型的总体架构如图所示（market model.svg），其中包含四个实体：数据拥有者(Data Owner, DO)、第三方（The Third Party, TTP）、服务提供者（Service Provider, SP）以及服务购买者。
+
+本文所考虑的模型如上图所示，其创新点在于考察了预测模型市场中，数据出售者可能存在的造假问题。模型一共包含4方角色，分别是数据出售者(Data Seller)、服务提供者(Service Provider)以及服务消费者(Service Consumers)以及第三方(Third Party)。
+
+%服务提供者
+
+在交易过程中，服务提供者公布自己的数据精确度要求$\epsilon$、质疑成功时索求的补偿$c_{DS}$与质疑失败的代价$c_{SP}$。然后决定从哪些数据出售者处购买数据，决定数据购买量为多少。服务提供者在获取价格函数之后决定购买的数据$S_i$，其由两部分组成——购买的数据出售者$s_i$与数据购买比例$0\leq n_i \leq 1$。收到数据$S_i$的密文后，服务提供者决定是否质疑。若选择质疑，服务提供者与第三方联系，获取原文，并由第三方仲裁决定补偿。
+
+当服务提供者发起认证要求之后，就能得知数据提供方添加的噪声是否过量，无论数据提供方是否添加了过量噪声，数据原文都会暴露给服务提供者。因此若数据提供方没有添加过量噪声，质疑结果$\phi=0$，服务提供方就需要给数据提供方补偿。反之，若$\phi=1$，数据提供方需要为自己的恶意扰动付出代价，给服务提供方补偿。
+
+
+无论质疑结果如何，服务提供者使用密文训练模型，评估模型质量$q$，提供预测服务，并决定预测服务的价格$p$。
+
+
+%数据提供者
+数据出售者向服务提供者出售预测模型训练所需的训练用原始数据。待出售的数据出售者的集合记为$S=\{s_i=(x_i,pv_i,pc_i)\}_{i=1}^N$共包含$N$组训练数据。其中$pv$为隐私要求值(privacy)，$pc$为单价(price)。当购买者购买完整数据集$x_i$时需要支付价格$pc$，购买比例$0\leq n \leq 1$的数据需要支付的价格为和购买比例$n$有关的函数，例如$c \cdot n^2$或$c\cdot e^n$为$a \cdot pc $。在本文中，价格函数为线性函数为$a \cdot pc $。
+
+
+定义：预测模型
+为了分析服务提供者训练预测模型的过程，首先需要考察模型训练过程。
+给定数据集$S_i$，服务提供者使用该数据训练，获取预测模型$h(S_i)$。服务消费者给定数据$x$，模型$h$关于$x$的预测结果$h(x)$的正确率为$q_h(x)$。
+
+为简洁起见，我们记使用数据集$S_i$购买数据量$n_i$训练成的集合$h(S_i)$的准确率为$ q(S_i)$。不失一般性，假设训练用数据越多，模型质量越好，即$q(x)$为关于$x$单调递增的函数，$q’(x)>0$。由于训练用数据的边际效益递减，当随着训练用数据规模的增大，添加等量数据对模型质量的提升效果逐渐变小，因此我们假设$q’’(x)<0$。
+
+\begin{table}[H]
+	\centering {\heiti 文中记号}
+	% \caption{表说明 *表说明采用黑体*}
+	\vspace {-2.5mm}
+	\begin{center}
+		\begin{tabular}{ll}
+\toprule
+*记号*&*记号的含义* \\
+\hline
+DO=$\{do_i\}_{i=1}^m$ & 数据拥有者
+\\
+SC=$\{sc_j\}_{j=1}^n$& 服务消费者\\
+SP &  服务提供者\\
+$\epsilon$ & 扰动系数\\
+$p_{do_i}(\epsilon)$ & 数据拥有者$i$的要价\\
+$g_{do_i}(\epsilon)$ &数据拥有者$i$的隐私损耗\\
+$p$ & 预测服务单价\\
+$q_i(\epsilon)$ & 预测服务质量\\  
+$f_j(q)$ & 服务购买者$j$的收益 \\
+$d_j(q)$ & 服务购买者$j$的购买量\\
+\bottomrule
+\end{tabular}
+\label{tab:notations}
+\end{center}
+\end{table}
+
+服务提供方完成训练后，需要为机器学习服务进行定价，确定单位服务的单价p。在模型中，我们假设服务模型的交易方式是线性的，服务提供者进行m次预测服务购买时需要支付的价格为np。鉴于服务购买方的购买量和单价成反比，服务提供方需要选取合适的价格p，以最大化其利润。
+
+为了解决上述问题，先考察服务消费者在给定服务单价下的策略，为此需要分析其效用，定义其效用函数如下：
+\begin{comment}
+	\begin{definition}
+		(Service consumers' utility). Given a prediction
+		model with quality $q$ and unit service price $p$, the utility of the
+		consumer $j$ purchasing $d$ units of services is
+		
+		\begin{equation}
+			U_j(p,q,d)=q\cdot f_j(d,q)-p\cdot d
+		\end{equation}
+	\end{definition}
+\end{comment}
+其中$f_j()$为服务消费者j的效用函数，体现了服务市场中j类型的服务消费者的市场特征。d为服务消费者j所购买的服务量，购买d份量的服务后，j的收益为$f_j(d,q)$。p为服务提供者设定的单位价格，购买d份预测服务时需要向服务提供者支付pd的费用。
+%Here $f_j()$ represents the utility function of service consumer $j$ under model quality $q$, reflecting the market characteristics of j-type service consumers in the service market. $d$ denotes the service quantity purchased by service consumer $j$, and purchasing $d$ units of service yields a benefit of $SP$ for $j$. $p$ is the unit price set by the service provider, and purchasing $d$ units of prediction service requires paying $p\cdot d$ to the service provider.
+
+
+可以看到，当f和p给定时，c为关于d的函数。如前文所述，我们假设服务消费者的效用函数a均为凸函数，那么b也是凸函数。由凸函数的性质可知，b达到最大值时当且仅当一阶导为零，即满足：
+%It can be seen that when $f_j$ and $p$ are given, $U_j$ is a function of $d$. As mentioned earlier, we assume the utility functions $f_j$ of service consumers are convex functions, and thus $U_j$ is also a convex function. According to the properties of convex functions, $U_j$ reaches its maximum if and only if the first derivative is zero, i.e., it satisfies:
+
+
+\begin{equation}
+	q\cdot f_j'(d)-p=0
+\end{equation}
+
+上式表明理性的服务购买者$j$所购买的服务数量$d_j$ 应如下所示：
+\begin{comment}
+	\begin{equation}
+		d_j=\max\{0,\mathop{\arg\max}\limits_{d} f_j'^{-1}(p/q)\}
+	\end{equation}
+\end{comment}
+
+\begin{equation}
+	d_j(p,q)=\max\{0, f_j'^{-1}(p/q)\}
+\end{equation}
+
+
+可以推断出，在模型质量为q，定价为p的情况下，第j种数据购买方的所提供的交易额为$p\cdot d_j$. 设第j种服务消费者在市场中的占比为 $\pi_j$，那么服务提供者的总收益为：
+
+%It can be inferred that under the condition of model quality $q$ and pricing $p$, the transaction amount provided by the service consumer $j$ is $p\cdot d_j$. If the proportion of the service consumers $j$ in the market is $\pi_j$, then the total revenue of the service provider is:
+
+\begin{equation}
+	r_{SP}(p,q)=p\cdot \sum_{j} \pi_j\cdot d_j 
+\end{equation}
+
+
+下面考察服务提供者和服务提供者的交易，数据出售者可以选择诚实地添加扰动($s_{do_{i}}^{h}$)或者恶意添加扰动($s_{do_{i}}^{m}$)两种策略，服务提供者可以选择相信($s_{SP}^{t}$)或者质疑( $s_{SP}^{v}$)两种策略。我们设数据出售者的收益函数为$u_{do_{i}}(x,y)$，服务提供者的收益函数为$u_{SP}(x,y)$.数据出售者采用诚实策略的概率为$p_{do_{i}}^{h}$，采用恶意扰动的概率为$p_{do_{i}}^{m}$.服务提供者采用相信的概率为$p_{SP}^{t}$，采用质疑的概率为$p_{SP}^{v}$。
+%We analyze the transaction between service provider and data owners. Data owners can choose between two strategies: honestly applying disturbance($s_{do_{i}}^{h}$) or maliciously applying disturbance $s_{do_{i}}^{m}$, while service providers can choose to trust $s_{SP}^{t}$ or verification $s_{SP}^{v}$. We define the utility function of data sellers as $u_{do_{i}}(x,y)$, and the utility function of service providers as $u_{SP}(x,y)$, where $x$ denotes the strategy of data owner and $y$ denotes the strategy of service provider. The probability of data owners adopting an honest strategy is $p_{do_{i}}^{h}$, and the probability of malicious disturbance is $p_{do_{i}}^{m}$. The probability of service providers choosing to trust is $p_{SP}^{t}$, and the probability of verification is $p_{SP}^{v}$.
+
+
+那么数据拥有者在服务提供者选择相信策略的收益为：
+%The service data owner‘s utility when the provider adopts the trust strategy is:
+
+\begin{equation}
+	\begin{aligned}
+		U_{do_{i}}(p_{do_i}
+		,p_{SP})=p^h_{do_i}
+		\cdot u_{do_{i}}
+		(s^h_{do_i}
+		,s^b_{SP})
+		\\+p^m_{do_i}
+		\cdot u_{do_i}	(s^m_{do_i}
+		,s^b_
+		{SP})
+	\end{aligned}
+\end{equation}
+
+那么数据拥有者在服务提供者选择相信策略的收益为：
+%The service data owner‘s utility when the provider adopts the verification strategy is:
+
+\begin{equation}
+	\begin{aligned}
+		U_{do_{i}}(p_{do_i}
+		,p_{SP})=p^h_{do_i}
+		\cdot u_{do_{i}}
+		(s^h_{do_i}
+		,s^v_{SP})
+		\\+p^m_{do_i}
+		\cdot u_{do_i}	(s^m_{do_i}
+		,s^v_
+		{SP})
+	\end{aligned}
+\end{equation}
+
+
+那么服务提供者在数据拥有者选择诚实扰动策略的收益为：
+%The service provider’s payoff when the data owner adopts the maliciously disturbance is:
+\begin{equation}
+	\begin{aligned}
+		U_{SP}(p_{do_i}
+		,p_{SP})=p^t_{SP}
+		\cdot u_{SP}
+		(s^h_{do_i}
+		,s^t_{SP})
+		\\+p^v_{SP}
+		\cdot u_{SP}	(s^h_{do_i}
+		,s^v_
+		{SP})
+	\end{aligned}
+\end{equation}
+
+那么服务提供者在数据拥有者选择恶意扰动策略的收益为：
+%The service provider’s payoff when the data owner adopts the honest disturbance is:
+\begin{equation}
+	\begin{aligned}
+		U_{SP}(p_{do_i}
+		,p_{SP})=p^t_{SP}
+		\cdot u_{SP}
+		(s^h_{do_i}
+		,s^t_{SP})
+		\\+p^v_{SP}
+		\cdot u_{SP}	(s^h_{do_i}
+		,s^v_{SP})
+	\end{aligned}
+\end{equation}
+
+
+下面考察$u_{SP}$和$u_{do_i}$，我们记服务提供者的为$p_{do_i}$，记数据拥有者的隐私损耗（privacy loss）在扰动系数 $\epsilon$下为$g()$，那么有：
+%Next, we examine $u_{SP}$ and $u_{do_i}$. We denote the data owner $i$'s demand price to service provider as $p_{do_i}$, and the data owner's privacy loss under disturbance parameter $\epsilon$ as $g()$. 
+
+若数据拥有者选择诚实添加扰动，服务提供者选择不发起认证质疑，那么服务提供者依协议向数据拥有者支付购买费用，而无需支付认证费用或者赔偿费用，因此数据拥有者$i$的效用为：
+%When data owner choose to disturb data honestly and service provider accept data without verification, service provider pays data owner negotiated data price without compensation or verification fee. Then data owner $i$'s utility is:
+
+\begin{equation}
+	u_{do_{i}}(s^h_{do_i},s^b_{SP})=p_{do_i}-g(\epsilon)
+\end{equation}
+
+服务提供者的效用为：
+%Service provider's utility is:
+
+\begin{equation}
+	u_{SP}(s^h_{do_i},s^b_{SP})=r_{SP}(p,q)-p_{do_i}
+\end{equation}
+
+其中$r_{SP}(p,q)$为服务提供者为服务消费者提供服务所获得的总收益。
+%Where $r_{SP}(p,q)$ is the total revenue of service provider when trading with service consumers.
+
+
+若数据拥有者选择诚实添加扰动，服务提供者选择发起认证质疑，那么服务提供者依协议向数据拥有者支付购买费用，还要支付赔偿费用，因此数据拥有者$i$的效用为：
+%If data owner choose to disturb data honestly and service provider choose to verify disturbance. Service provider needs to compensate data verify data owner's privacy loss during verification. Then data owner $i$'s utility is:
+
+\begin{equation}
+	u_{do_{i}}(s^h_{do_i},s^v_{SP})=p_{do_i}+c_{do_i}-g(0)
+\end{equation}
+
+服务提供者的效用为：
+%Service provider's utility is:
+
+\begin{equation}
+	u_{SP}(s^h_{do_i},s^v_{SP})=r_{SP}(p,q)-p_{do_i}-c_{do_i}
+\end{equation}
+
+其中$c_{do_i}$是服务提供者向数据拥有者$i$支付的费用。
+%Where $c_{do_i}$ is the compensation fee of data owner $i$.
+
+
+若数据拥有者选择恶意添加过量扰动，服务提供者不选择发起认证质疑，那么服务提供者依协议向数据拥有者支付购买费用，还几乎不能获得收益，因为训练模型的数据被扰动了。在该情形下，数据拥有者$i$的效用为：
+%When data owner choose to disturb data maliciously and service provider accept data without verification, service provider pays data owner the negotiated data price and data owner does not need to compensate for malicious disturbance. Then data owner $i$'s utility is:
+
+\begin{equation}
+	u_{do_{i}}(s^m_{do_i},s^b_{SP})=p_{do_i}
+\end{equation}
+
+服务提供者的效用为：
+%Service provider's utility is:
+
+\begin{equation}
+	u_{SP}(s^m_{do_i},s^b_{SP})=-p_{do_i}
+\end{equation}
+
+若数据拥有者选择恶意添加过量扰动，服务提供者选择发起认证质疑，那么数据拥有者还需要向服务提供者支付赔偿。在该情形下，数据拥有者$i$的效用为：
+%When data owner choose to disturb data maliciously and service provider choose to verify disturbance, service provider doesn't need to pay negotiated data price while data owner needs to compensate for malicious disturbance. Then data owner $i$'s utility is:
+
+\begin{equation}
+	u_{do_{i}}(s^m_{do_i},s^v_{SP})=p_{do_i}-c_{SP}
+\end{equation}
+
+服务提供者的效用为：
+%Service provider's utility is:
+
+\begin{equation}
+	u_{SP}(s^m_{do_i},s^v_{SP})=c_{SP}-p_{do_i}
+\end{equation}
+
+其中$c_{SP}$为数据拥有者在添加恶意扰动并被服务提供者认证成功时，需要支付给服务提供者的补偿。
+%Among them, $c_{SP}$ is the compensation that the data owner needs to pay to the service provider when adding malicious disturbances and being successfully verified by the service provider.
+
+服务提供者采用相信策略的概率为$p_{SP}^b$，采用认证策略的概率为$p_{SP}^v$，那么数据拥有者的期望收益为：
+%We denote the probability of the service provider believing data owner as $p_{SP}^b$, and the probability of adopting an authentication strategy as $p_{SP}^v$. Therefore, the expected utility of the data owner is:
+
+
+\begin{equation}
+	\begin{aligned}
+		&U_{do_i}=\\
+		&\begin{cases}
+			p_{SP}^b\cdot u_{do_{i}}(s^h_{do_i},s^b_{SP})+p_{SP}^v\cdot u_{do_{i}}(s^h_{do_i},s^v_{SP}),S_{do_i}=s^h_{do_i} \\
+			p_{SP}^b\cdot u_{do_{i}}(s^m_{do_i},s^b_{SP})+p_{SP}^v\cdot u_{do_{i}}(s^m_{do_i},s^v_{SP}),S_{do_i}=s^m_{do_i}
+		\end{cases}
+	\end{aligned}
+\end{equation}
+
+其中$s^h_{do_i}$意为数据拥有者采纳了诚实扰动策略，$s^m_{do_i}$意为采纳了恶意扰动策略。
+%Where $s^h_{do_i}$ means data owner adopting the honest disturbance strategy and $s^m_{do_i}$ means data owner choosing to disturb data maliciously.
+
+记数据拥有者采用诚实扰动的概率为$p_{do_i}^h$，采用恶意扰动的概率为$p_{do_i}^m$，那么服务提供者的期望收益为：
+%We denote the probability of the data owner adopting the honest strategy as $p_{do_i}^h$, and the probability of adopting malicious disturbance strategy as $p_{do_i}^m$. Therefore, the expected utility of the service provider is:
+
+
+\begin{equation}
+	\begin{aligned}
+		&U_{SP}=\\
+		&\begin{cases}
+			p_{do_i}^h\cdot u_{SP}(s^h_{do_i},s^b_{SP})+p_{do_i}^m\cdot u_{SP}(s^m_{do_i},s^b_{SP}),S_{SP}=s^b_{SP} \\
+			p_{do_i}^h\cdot u_{SP}(s^h_{do_i},s^v_{SP})+p_{do_i}^m\cdot u_{SP}(s^m_{do_i},s^v_{SP}),S_{SP}=s^v_{SP}
+		\end{cases}
+	\end{aligned}
+\end{equation}
+
+最后，我们考察数据拥有者和服务提供者的博弈达到纳什均衡的状态时的两者策略。此时无论服务提供者采用何种混合策略都不影响数据拥有者的效益，同时无论数据拥有者采用何种混合策略都不影响服务提供者的效益，因此有：
+
+%Finally, we examine the strategies of both data owners and service providers when their game reaches a Nash equilibrium. At this point, neither the service provider's mixed strategy affects the data owner's utility, nor does the data owner's mixed strategy affect the service provider's utility. Which means:
+
+\begin{equation}
+	\begin{cases}
+		u_{do_i}(S_{do_i}=s_{do_i}^h)= u_{do_i}(S_{do_i}=s_{do_i}^m)\\
+		u_{DC}(S_{DC}=s_{DC}^b)=u_{DC}(S_{DC}=s_{DC}^v)
+	\end{cases}
+\end{equation}
+\begin{comment}
+	可以得出服务提供者和数据拥有者的最佳混合策略分别为：
+	%The optimal mixing strategies for service providers can be derived as follows:
+	\begin{equation}
+		\begin{cases}
+			p_{SP}^b=\frac{c_{do_i}+c_{SP}+p_{do_i}-g(0)}{c_{do_i}+c_{SP}+p_{do_i}+g(\epsilon)-g(0)} \\
+			p_{SP}^v=\frac{g(\epsilon)}{c_{do_i}+c_{SP}+p_{do_i}+g(\epsilon)-g(0)}
+		\end{cases}
+	\end{equation}
+	
+	%The optimal mixing strategies for data owner can be derived as follows:
+	\begin{equation}
+		\begin{cases}
+			p_{do_i}^h=\frac{c_{SP}+p_{do_i}}{c_{SP}+c_{do_i}+p_{do_i}} \\
+			p_{do_i}^m=\frac{c_{do_i}}{c_{SP}+c_{do_i}+p_{do_i}}
+		\end{cases}
+	\end{equation}
+\end{comment}
+
+可以得出数据拥有者的最佳混合策略为：
+
+%The optimal mixing strategies for data owner can be derived as follows:
+\begin{equation}
+	\begin{cases}
+		p_{do_i}^h=\frac{c_{SP}}{c_{SP}+c_{do_i}} \\
+		p_{do_i}^m=\frac{c_{do_i}}{c_{SP}+c_{do_i}}
+	\end{cases}
+\end{equation}
+特别地，在数据拥有者采用纳什均衡混合策略时，服务提供者的期望收益和纯策略相等，因此其期望收益为:
+
+%Specifically, when the data owner adopts the Nash equilibrium mixed strategy, the service provider's expected utility equals that under pure strategies; therefore, its expected utility is:
+
+
+\begin{equation}
+	\begin{aligned}
+		U_{SP}(p_{do_i}
+		,p_{SP})&=p^h_{do_i}
+		\cdot u_{SP}
+		(s^h_{do_i}
+		,s^b_{SP})
+		+p^m_{do_i}
+		\cdot u_{SP}	(s^m_{do_i}
+		,s^b_
+		{SP})
+		\\&=\frac{c_{SP}(r_{SP}-p_{do_i})-c_{do_i}p_{do_i}}{c_{SP}+c_{do_i}}
+		\\&=\frac{c_{SP}r_{SP}}{c_{SP}+c_{do_i}}-p_{do_i}
+	\end{aligned}
+\end{equation}
+
+综上所述，在数据市场中，最大化服务提供者利润的优化模型如下所示：
+%In summary, in the data market, the problem of maximizing the interests of service providers is equivalent to the following optimization problem:
+%In summary, in the data market, the problem of maximizing the interests of service providers is equivalent to the following optimization problem:
+
+\begin{align}
+	\frac{c_{SP}r_{SP}}{c_{SP}+c_{do_i}}-p_{do_i}
+\end{align}
+
+其中：
+
+\begin{equation}
+	r_{SP}(p,q)=p\cdot \sum_{j} \pi_j\cdot d_j 
+\end{equation}
+
+\begin{equation}
+	d_j(p,q)=\max\{0, f_j'^{-1}(p/q)\}
+\end{equation}
+
+\begin{align}
+	c_{do_i} \geq 0\\
+	p_{do_i} \geq 0\\
+	p\geq 0
+\end{align}
+
+
+接下来对优化目标进行数学上的分析，记$C_{sp}=\eta \cdot \c{do_i}$，得到：
+
+%We assume that $C_{sp}=\eta \cdot \c{do_i}$, then we have:
+
+\begin{equation}
+	U_{SP}=\frac{\eta}{\eta+1}\cdot r_{SP}-p_{do_i}
+\end{equation}       
+
+注意到$r_{SP}=p\cdot \sum_{j}^{}\pi_j d_j$， $d_j=d_j(p,q)=d_j(\frac{p}{q})=max\{0,f^{-1}(\frac{p}{q})\}$,$q=Q(p_{do_i})$.
+得出$p_{do_i}=Q^{-1}(q)$。
+
+记$\frac{p}{q}=x$, $D(\frac{p}{q})=\sum_{j}^{}\pi_j d_j=\sum_{j}^{}\pi_j d_j(\frac{p}{q})$
+
+我们得到$r_{SP}=p\cdot D(x)$.
+
+最后，我们得出：
+\begin{equation}
+	U_{SP}=\frac{\eta}{\eta+1}x\cdot q \cdot D(x)-Q^{-1}(q)
+\end{equation}
+
+接下来分析上式,由于$Q^{-1}''=-\frac{Q''(x)}{Q'(x)^3}$，且由于训练用数据对于模型质量的边际效益递减，$Q'(x)>0$，$Q''(x)<0$，因此$Q^{-1}''>0$，由此得出
+
+\begin{equation}
+	\frac{dU}{dq}=\frac{\eta}{\eta+1}x\cdot D(x)-Q^{-1}'(q)
+\end{equation}
+
+%令du/dq=0dddddddddd
+
+接下来分析上式,由于$Q^{-1}''=-\frac{Q''(x)}{Q'(x)^3}$，且由于训练用数据对于模型质量的边际效益递减，$Q'(x)>0$，$Q''(x)<0$，因此$Q^{-1}''>0$，由此得出$U_{SP}$在固定$x$时存在唯一极大值点。令$\frac{dU}{dq}=0$，得到：
+\begin{align}
+	\frac{\eta}{\eta+1}x\cdot D(x)-Q^{-1}'(q)=0\\
+	Q^{-1}'(q)=\frac{\eta}{\eta+1}x\cdot D(x)
+\end{align}
+
+令上式=0，解得
+\begin{equation}
+	q=(Q^{-1}')^{-1}(\frac{\eta}{\eta+1}x\cdot D(x))
+\end{equation}
+
+记$y=\frac{\eta}{\eta+1}x\cdot D(x)$,有：
+
+\begin{equation}
+	U_{SP}=q\cdot y -Q^{-1}(q)
+\end{equation}
+
+且$q=(Q^{-1}')^{-1}(y)$
+
+那么$y=Q^{-1}'(q)$，又因为$Q^{-1}(q)=p_{do_i}$，$y=\frac{1}{f'(p_{do_i})}$，因此$p_{do_i}=Q'^{-1}(\frac{1}{y})$，得出：
+
+\begin{equation}
+	\begin{aligned}
+		Q^{-1}(q)&=p_{do_i}=Q'^{-1}(\frac{1}{y})\\
+		q&=Q(Q'^{-1}(\frac{1}{y}))
+	\end{aligned}
+\end{equation}
+因此原式转换如下：
+\begin{equation}
+	\begin{aligned}
+	U_{SP}&=q\cdot y -Q^{-1}(q)\\
+	&=y\cdot Q(Q'^{-1}(\frac{1}{y}))-Q'^{-1}(\frac{1}{y})
+\end{aligned}
+\end{equation}
+
+
+\begin{comment}
+	又因为$q=Q(p_{do_i})$，由单变量函数的反函数性质知：
+	\begin{equation}
+		Q^{-1}'(q)=\frac{1}{Q'(p_{do_i})}=\frac{\eta}{\eta+1}x\cdot D(x)
+	\end{equation}
+	
+	得出 
+	\begin{equation}
+		q=(Q^{-1}')^{-1}(\frac{\eta}{\eta+1}x\cdot D(x))
+	\end{equation}
+	
+	由此我们将原式转化为了一个关于x的单变量优化问题
+	
+	因此原式=
+	\begin{equation}
+		U_{SP}=\frac{5}{s}
+	\end{equation}
+\end{comment}
+
+记$z=Q'^{-1}(\frac{1}{y})$，那么$\frac{1}{y}=Q'(z)$，$y=\frac{1}{Q'(z)}$,有：
+
+\begin{equation}
+	\begin{aligned}
+		U=\frac{1}{Q'(z)}Q(z)-z\\
+		U'(z)=-\frac{Q''(z)}{Q'(z)^2}Q(z)
+	\end{aligned}
+\end{equation}
+
+由于$Q(z)>0$，$Q'(z)>0$，$Q''(z)<0$，因此$U'(z)>0$恒成立，因此求原式最大值等价于求$z$最大值
+
+由于
+\begin{equation}
+	D(\frac{p}{q})=\sum_{j}^{}\pi_j d_j=\sum_{j}^{}\pi_j d_j(\frac{p}{q})
+\end{equation}
+
+
+\begin{equation}
+	d_j(p,q)=\max\{0, f_j'^{-1}(p/q)\}
+\end{equation}
+
+可以看出$D(z)$为分段函数，在每个$f_j'^{-1}(z)=0$之处分段，不失一般性，记$z_j$满足$f_j'^{-1}(z_j)=0$，且$z_1\leq z_2\leq...z_n$，那么由分段函数的性质，$D$的最大值在$Z={z_j}_{j=1}^{n}$中取到，或者在$\arg_{z}\{z\cdot D'(z)+D(z)=0\}$上取到，那么只用考察这些特殊点即可，为此我们引入如下算法以解决该问题。
+
+
+{\heiti 算法\textbf{Y}}.\quad \textit{PMCI}算法.
+{\zihao{5-}
+	
+	输入：模型质量函数$q(n)$；不同服务购买者的收益函数$f_j(q)$，
+	
+	输出：最佳购买量$p_{do_i}$和定价$p$
+	
+	1. 初始化空最小堆$EP$
+	
+	2. $R^*\longleftarrow \Delta^*\longleftarrow n^*\longleftarrow \Delta_l\longleftarrow 0$//初始化
+	
+	3. FOREACH 服务消费者$j$ DO
+	
+	4. \phantom{占}计算其效用反函数$f^{-1}(\Delta)$
+	
+	5. \phantom{占}$\Delta_j\longleftarrow f'_j(0)$; En-Heap($EP$,$\Delta_j$)
+	
+	%ENDFOR
+	
+	6. WHILE $EP\neq \emptyset$ DO:
+	
+	7. \phantom{占}$\Delta_r\leftarrow$ De-Heap($EP$)
+	
+	8. \phantom{占}考察区间$(\Delta_l,\Delta_r]$上的收益函数
+	
+	\phantom{8.占}$D(\Delta)=\sum_{1\leq j\leq M,\Delta_j>\Delta_l}f^'{-1}_j(\Delta)$
+	
+	9. \phantom{占}$R_{EP}\leftarrow \Delta_r\cdot D(\Delta_r)$
+	
+	10. \phantom{占}IF $R_{EP}>R^*$ THEN
+	
+	11. \phantom{占位}$R^*\leftarrow R_{EP}$；$\Delta^*\leftarrow\Delta_r$
+
+	12. \phantom{占}接下来计算满足$D(\Delta)+\Delta\cdot D'(\Delta)=0$的零点
+	
+	\phantom{8.占}$\Delta_c$
+	
+	13. \phantom{占}IF $\Delta_c<\Delta_r \& \Delta_c>\Delta_l$ THEN
+	
+	14. \phantom{占位}$R_c\leftarrow \Delta_c\cdot D(\Delta_c)$
+	
+	15. \phantom{占位}IF $R_c>R^*$ THEN  
+	
+	16. \phantom{占位位}$R^*\leftarrow R_c$； $\Delta^*\leftarrow \Delta_c$
+	
+	17. \phantom{占}$\Delta_l\leftarrow \Delta_r$
+	
+	18. $n^*\leftarrow arg_n\{q'(n)=c/R^*\}$
+	
+	19. $n\leftarrow \min\{\max\{n_l,n^*\},100\}$
+	
+	20. IF $q(n^*)\cdot R^*-n^*\cdot c<0$ THEN
+	
+	21. \phantom{占}$n^*\leftarrow 0$； $\Delta^*\leftarrow 0$
+	
+	22. RETURN $n^*$,$p^*=q(n^*)\cdot \Delta^*$  
+}
+
+算法的1-2行初始化了循环所需的临时变量，3-5行建立了空小根堆用于存储数据购买者的效用需求函数断点.6-17行是算法的主体部分，其中8-11行考察了所有断点的数值，12-16行考察了所有拐点的数值。
+
+从以上分析中可以得出，算法的时间复杂度为$O(k)$，其中$k$为断点的个数，又因为$k\leq n$，所以算法的时间复杂度为$O(n)$。

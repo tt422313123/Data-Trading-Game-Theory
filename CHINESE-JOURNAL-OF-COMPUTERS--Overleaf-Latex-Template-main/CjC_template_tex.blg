@@ -1,0 +1,59 @@
+This is BibTeX, Version 0.99d (TeX Live 2022)
+Capacity: max_strings=200000, hash_size=200000, hash_prime=170003
+The top-level auxiliary file: CjC_template_tex.aux
+The style file: gbt7714-numerical.bst
+Reallocated singl_function (elt_size=4) to 100 items from 50.
+Reallocated singl_function (elt_size=4) to 150 items from 100.
+Reallocated wiz_functions (elt_size=4) to 6000 items from 3000.
+Reallocated singl_function (elt_size=4) to 100 items from 50.
+Reallocated singl_function (elt_size=4) to 100 items from 50.
+Reallocated singl_function (elt_size=4) to 100 items from 50.
+Reallocated singl_function (elt_size=4) to 100 items from 50.
+Reallocated singl_function (elt_size=4) to 100 items from 50.
+Reallocated glb_str_ptr (elt_size=4) to 20 items from 10.
+Reallocated global_strs (elt_size=200001) to 20 items from 10.
+Reallocated glb_str_end (elt_size=4) to 20 items from 10.
+Reallocated singl_function (elt_size=4) to 100 items from 50.
+Database file #1: ref.bib
+Database file #2: ref/RaoDongDuiMoXingYingXiang.bib
+You've used 6 entries,
+            5375 wiz_defined-function locations,
+            1095 strings with 8760 characters,
+and the built_in function-call counts, 25088 in all, are:
+= -- 960
+> -- 2244
+< -- 3186
++ -- 1231
+- -- 401
+* -- 247
+:= -- 3885
+add.period$ -- 19
+call.type$ -- 6
+change.case$ -- 15
+chr.to.int$ -- 985
+cite$ -- 6
+duplicate$ -- 146
+empty$ -- 398
+format.name$ -- 154
+if$ -- 6363
+int.to.chr$ -- 1
+int.to.str$ -- 7
+missing$ -- 0
+newline$ -- 46
+num.names$ -- 19
+pop$ -- 625
+preamble$ -- 1
+purify$ -- 10
+quote$ -- 0
+skip$ -- 2181
+stack$ -- 0
+substring$ -- 1505
+swap$ -- 6
+text.length$ -- 132
+text.prefix$ -- 0
+top$ -- 0
+type$ -- 66
+warning$ -- 0
+while$ -- 143
+width$ -- 0
+write$ -- 100

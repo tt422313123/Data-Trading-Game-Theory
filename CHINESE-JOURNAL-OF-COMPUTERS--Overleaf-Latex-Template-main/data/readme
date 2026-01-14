@@ -44,3 +44,15 @@
     我已经成功将“CHINESE-JOURNAL-OF-COMPUTERS--Overleaf-Latex-Template-main”上传到github仓库，请帮我生成一份CHINESE-JOURNAL-OF-COMPUTERS--Overleaf-Latex-Template-main\How_to_use.md文件，内容包括：如何在后续上传、维护、使用github仓库
 
 latex编译时会产生aux等文件，我想忽略这些文件，请帮我生成一份.gitignore文件，内容包括忽略latex编译时产生的常见文件类型
+
+1.14 接下来的工作：
+
+    解释实验结果，完成论文初稿
+
+    解释实验结果：
+
+        c、cdoi、csp
+
+        utility和utility doi
+
+    不同模型（l1、l2、minst）

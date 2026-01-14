@@ -1,0 +1,31 @@
+# LaTeX build files
+*.aux
+*.bbl
+*.bcf
+*.blg
+*.bse
+*.bte
+*.fdb_latexmk
+*.fls
+*.idx
+*.ind
+*.lof
+*.log
+*.lot
+*.nav
+*.out
+*.run.xml
+*.snm
+*.synctex.gz
+*.toc
+*.vrb
+
+# TeXstudio
+*.txss
+
+# VS Code
+.vscode/
+
+# Windows
+Thumbs.db
+Desktop.ini

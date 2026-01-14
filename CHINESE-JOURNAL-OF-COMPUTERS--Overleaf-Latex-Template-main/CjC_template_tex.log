@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999994 (TeX Live 2022) (preloaded format=xelatex 2023.2.13)  13 JAN 2026 18:02
+This is XeTeX, Version 3.141592653-2.6-0.999994 (TeX Live 2022) (preloaded format=xelatex 2023.2.13)  14 JAN 2026 17:06
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1048,7 +1048,11 @@ LaTeX Font Warning: Font shape `TU/SimHei(0)/b/n' undefined
 Overfull \vbox (6.05322pt too high) has occurred while \output is active []
 
 
-[2]) (./data/c3.tex Excluding 'comment' comment.
+[2]) (./data/c3.tex
+
+Package natbib Warning: Citation `ye-183' on page 3 undefined on input line 3.
+
+Excluding 'comment' comment.
 Overfull \hbox (1.75656pt too wide) has occurred while \output is active
 [] 
  []
@@ -1235,27 +1239,42 @@ Overfull \hbox (1.58028pt too wide) in paragraph at lines 97--99
 0.53937 YearPredictionMSD
  []
 
-File: fig/占位符/占位符.pdf Graphic file (type pdf)
-<use fig/占位符/占位符.pdf>
-File: fig/占位符/占位符.pdf Graphic file (type pdf)
-<use fig/占位符/占位符.pdf>
-File: fig/占位符/占位符.pdf Graphic file (type pdf)
-<use fig/占位符/占位符.pdf>
-File: fig/占位符/占位符.pdf Graphic file (type pdf)
-<use fig/占位符/占位符.pdf>
-File: fig/占位符/占位符.pdf Graphic file (type pdf)
-<use fig/占位符/占位符.pdf>
-File: fig/占位符/占位符.pdf Graphic file (type pdf)
-<use fig/占位符/占位符.pdf>
-File: fig/占位符/占位符.pdf Graphic file (type pdf)
-<use fig/占位符/占位符.pdf>
-File: fig/占位符/占位符.pdf Graphic file (type pdf)
-<use fig/占位符/占位符.pdf>
-File: fig/占位符/占位符.pdf Graphic file (type pdf)
-<use fig/占位符/占位符.pdf>
-
-LaTeX Warning: Float too large for page by 4.43774pt on input line 142.
-
+File: figures/input_l1_utility_vs_c.pdf Graphic file (type pdf)
+<use figures/input_l1_utility_vs_c.pdf>
+File: figures/input_l2_utility_vs_c.pdf Graphic file (type pdf)
+<use figures/input_l2_utility_vs_c.pdf>
+File: figures/input_dnn_utility_vs_c.pdf Graphic file (type pdf)
+<use figures/input_dnn_utility_vs_c.pdf>
+File: figures/input_l1_utility_vs_cdoi.pdf Graphic file (type pdf)
+<use figures/input_l1_utility_vs_cdoi.pdf>
+File: figures/input_l2_utility_vs_cdoi.pdf Graphic file (type pdf)
+<use figures/input_l2_utility_vs_cdoi.pdf>
+File: figures/input_dnn_utility_vs_cdoi.pdf Graphic file (type pdf)
+<use figures/input_dnn_utility_vs_cdoi.pdf>
+File: figures/input_l1_utility_vs_csp.pdf Graphic file (type pdf)
+<use figures/input_l1_utility_vs_csp.pdf>
+File: figures/input_l2_utility_vs_csp.pdf Graphic file (type pdf)
+<use figures/input_l2_utility_vs_csp.pdf>
+File: figures/input_dnn_utility_vs_csp.pdf Graphic file (type pdf)
+<use figures/input_dnn_utility_vs_csp.pdf>
+File: figures/input_l1_utility_doi_vs_c.pdf Graphic file (type pdf)
+<use figures/input_l1_utility_doi_vs_c.pdf>
+File: figures/input_l2_utility_doi_vs_c.pdf Graphic file (type pdf)
+<use figures/input_l2_utility_doi_vs_c.pdf>
+File: figures/input_dnn_utility_doi_vs_c.pdf Graphic file (type pdf)
+<use figures/input_dnn_utility_doi_vs_c.pdf>
+File: figures/input_l1_utility_doi_vs_cdoi.pdf Graphic file (type pdf)
+<use figures/input_l1_utility_doi_vs_cdoi.pdf>
+File: figures/input_l2_utility_doi_vs_cdoi.pdf Graphic file (type pdf)
+<use figures/input_l2_utility_doi_vs_cdoi.pdf>
+File: figures/input_dnn_utility_doi_vs_cdoi.pdf Graphic file (type pdf)
+<use figures/input_dnn_utility_doi_vs_cdoi.pdf>
+File: figures/input_l1_utility_doi_vs_csp.pdf Graphic file (type pdf)
+<use figures/input_l1_utility_doi_vs_csp.pdf>
+File: figures/input_l2_utility_doi_vs_csp.pdf Graphic file (type pdf)
+<use figures/input_l2_utility_doi_vs_csp.pdf>
+File: figures/input_dnn_utility_vs_csp.pdf Graphic file (type pdf)
+<use figures/input_dnn_utility_vs_csp.pdf>
 File: fig/深度学习/实验结果/隐私敏感度-使用默认q.png Graphic file (type bmp)
 <fig/深度学习/实验结果/隐私敏感度-使用默认q.png>
 
@@ -1270,6 +1289,11 @@ Overfull \vbox (6.01794pt too high) has occurred while \output is active []
 [9]
 File: fig/占位符/占位符.eps Graphic file (type eps)
 <fig/占位符/占位符.eps>
+
+Overfull \vbox (6.05322pt too high) has occurred while \output is active []
+
+
+[10]
 File: fig/占位符/占位符.eps Graphic file (type eps)
 <fig/占位符/占位符.eps>
  Excluding 'comment' comment.
@@ -1302,13 +1326,6 @@ Package fontspec Info: Font family 'KaiTi(0)' created for font 'KaiTi' with
 (fontspec)             - 'small caps'  (m/sc) with NFSS spec.: 
 
 
-Overfull \vbox (6.05322pt too high) has occurred while \output is active []
-
-
-[10]
-File: CJC1.pdf Graphic file (type pdf)
-<use CJC1.pdf>
- (./CjC_template_tex.bbl
 Overfull \hbox (1.75656pt too wide) has occurred while \output is active
 [] 
  []
@@ -1317,7 +1334,88 @@ Overfull \hbox (1.75656pt too wide) has occurred while \output is active
 Overfull \vbox (6.01794pt too high) has occurred while \output is active []
 
 
-[11])
+[11]
+Overfull \vbox (6.05322pt too high) has occurred while \output is active []
+
+
+[12]
+! Unable to load picture or PDF file 'CJC1.pdf'.
+<to be read again> 
+                   }
+l.252 ...cs[width=3.15in,height=1.98in]{CJC1.pdf}}
+                                                  
+The requested image couldn't be read because
+it was not a recognized image format.
+
+
+! Package graphics Error: Division by 0.
+
+See the graphics package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.252 ...cs[width=3.15in,height=1.98in]{CJC1.pdf}}
+                                                  
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+
+! Package graphics Error: Division by 0.
+
+See the graphics package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.252 ...cs[width=3.15in,height=1.98in]{CJC1.pdf}}
+                                                  
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+File: CJC1.pdf Graphic file (type pdf)
+<use CJC1.pdf>
+! Unable to load picture or PDF file 'CJC1.pdf'.
+<to be read again> 
+                   \GPT@clipend 
+l.252 ...cs[width=3.15in,height=1.98in]{CJC1.pdf}}
+                                                  
+The requested image couldn't be read because
+it was not a recognized image format.
+
+
+Package natbib Warning: Citation `Bohan1928' on page 13 undefined on input line
+ 295.
+
+
+Package natbib Warning: Citation `chen1980zhongguo' on page 13 undefined on inp
+ut line 295.
+
+
+Package natbib Warning: Citation `bravo1990comparative' on page 13 undefined on
+ input line 295.
+
+
+Package natbib Warning: Citation `niu2013zonghe' on page 13 undefined on input 
+line 295.
+
+
+Package natbib Warning: Citation `yuan2012lana' on page 13 undefined on input l
+ine 295.
+
+(./CjC_template_tex.bbl)
+Overfull \vbox (42.42578pt too high) has occurred while \output is active []
+
+
+Overfull \hbox (1.75656pt too wide) has occurred while \output is active
+[] 
+ []
+
+
+Overfull \vbox (6.01794pt too high) has occurred while \output is active []
+
+
+[13]
 
 Package multicol Warning: Using `1' columns doesn't seem a good idea.
  I therefore use two columns instead on input line 311.
@@ -1348,20 +1446,16 @@ Package multicol Warning: Using `1' columns doesn't seem a good idea.
 Overfull \vbox (6.05322pt too high) has occurred while \output is active []
 
 
-[12]
-Overfull \hbox (1.75656pt too wide) has occurred while \output is active
-[] 
- []
+[14]
 
+Package natbib Warning: There were undefined citations.
 
-Overfull \vbox (6.01794pt too high) has occurred while \output is active []
+(./CjC_template_tex.aux
 
+Package natbib Warning: Citation(s) may have changed.
+(natbib)                Rerun to get citations correct.
 
-[13]
-Overfull \vbox (6.05322pt too high) has occurred while \output is active []
-
-
-[14] (./CjC_template_tex.aux)
+)
 
 LaTeX Font Warning: Some font shapes were not available, defaults substituted.
 
@@ -1375,12 +1469,12 @@ LaTeX Warning: There were multiply-defined labels.
 ### simple group (level 1) entered at line 123 ({)
 ### bottom level 
 Here is how much of TeX's memory you used:
- 13534 strings out of 476179
- 325392 string characters out of 5813072
+ 13665 strings out of 476179
+ 331071 string characters out of 5813072
  663450 words of memory out of 5000000
- 33920 multiletter control sequences out of 15000+600000
- 482106 words of font info for 149 fonts, out of 8000000 for 9000
+ 34034 multiletter control sequences out of 15000+600000
+ 482114 words of font info for 150 fonts, out of 8000000 for 9000
  1348 hyphenation exceptions out of 8191
- 89i,15n,97p,1479b,765s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 89i,15n,97p,1479b,745s stack positions out of 10000i,1000n,20000p,200000b,200000s
 
 Output written on CjC_template_tex.pdf (14 pages).

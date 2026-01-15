@@ -49,10 +49,90 @@ latex编译时会产生aux等文件，我想忽略这些文件，请帮我生成
 
     解释实验结果，完成论文初稿
 
-    解释实验结果：
+    想做的
 
-        c、cdoi、csp
+        解释q拟合结果（已完成）
+            minst已完成
 
-        utility和utility doi
+            yearmsd（已完成）：
 
-    不同模型（l1、l2、minst）
+                mse指数拟合
+
+                r2指数拟合
+
+                拉普拉斯差分
+
+                高斯差分
+
+        解释对比算法
+
+            策略包括
+
+                自保策略
+
+                定值模拟策略
+
+            每个策略要做的
+
+                解释策略
+
+                    运行逻辑
+                    
+                        会采用该算法的人的性格
+
+                        该算法适用的场景
+
+                        
+
+                    引用（？）
+
+                伪代码
+
+                
+
+
+        解释实验配置
+
+            实验环境
+
+            参数设置
+
+        解释实验结果：
+
+            c、cdoi、csp
+
+            utility和utility doi
+
+        不同模型（l1、l2、minst）
+
+    已经做的
+
+我现在有如下需求：
+    对latex文档Data-Trading-Game-Theory\CHINESE-JOURNAL-OF-COMPUTERS--Overleaf-Latex-Template-main\data\experiment.tex的2*2跨栏图片：
+        “\begin{figure*}[t]
+        \centering
+        \begin{minipage}{0.45\textwidth}
+            \centering
+            \subfigure[]{
+                \includegraphics[width=0.9\linewidth]{figures/MSE_Exponential_short_Fitting.pdf}
+            }
+            \\
+            \subfigure[]{
+                \includegraphics[width=0.9\linewidth]{figures/MSE_Fitting.pdf}
+            }
+        \end{minipage}
+        \hfill
+        \begin{minipage}{0.45\textwidth}
+            \centering
+            \subfigure[]{
+                \includegraphics[width=0.9\linewidth]{figures/R2_Exponential_short_Fitting.pdf}
+            }
+            \\
+            \subfigure[]{
+                \includegraphics[width=0.9\linewidth]{figures/R2_Fitting.pdf}
+            }
+        \end{minipage}
+        \caption{跨栏图片示例}
+        \label{figures_q_and_mul_xianxinghuigui}
+    \end{figure*}”
+    我希望对每幅子图添加label，使得我可以在正文中单独引用每幅子图，例如“图X(a)”，请帮我修改上述代码

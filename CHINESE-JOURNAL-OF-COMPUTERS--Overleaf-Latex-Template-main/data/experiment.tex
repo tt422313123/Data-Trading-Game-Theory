@@ -4,27 +4,27 @@
 	\centering
 	\begin{minipage}{0.45\textwidth}
 		\centering
-		\subfigure[]{
+		\subfigure[\label{fig_MSE_Exponential_short_Fitting}]{
 			\includegraphics[width=0.9\linewidth]{figures/MSE_Exponential_short_Fitting.pdf}
 		}
 		\\
-		\subfigure[]{
-			\includegraphics[width=0.9\linewidth]{figures/MSE_Fitting.pdf}
+		\subfigure[\label{fig_R2_Exponential_short_Fitting}]{
+			\includegraphics[width=0.9\linewidth]{figures/R2_Exponential_short_Fitting.pdf}
 		}
 	\end{minipage}
 	\hfill
 	\begin{minipage}{0.45\textwidth}
 		\centering
-		\subfigure[]{
-			\includegraphics[width=0.9\linewidth]{figures/R2_Exponential_short_Fitting.pdf}
+		\subfigure[\label{fig_MSE_Polynomial_short_Fitting}]{
+			\includegraphics[width=0.9\linewidth]{figures/MSE_Polynomial_short_Fitting.pdf}
 		}
 		\\
-		\subfigure[]{
-			\includegraphics[width=0.9\linewidth]{figures/R2_Fitting.pdf}
+		\subfigure[\label{fig_R2_Polynomial_short_Fitting}]{
+			\includegraphics[width=0.9\linewidth]{figures/R2_Polynomial_short_Fitting.pdf}
 		}
 	\end{minipage}
 	\caption{跨栏图片示例}
-	\label{fig:cross_column_example}
+	\label{figures_q_and_mul_xianxinghuigui}
 \end{figure*}
 为了全方位考察保护隐私的数据市场机制，
 %本次模拟实验使用YEARMSD、POWER、 SUSY、MINST数据集模拟数据拥有者拥有的数据，模拟数据拥有者和服务提供者在数据出售阶段的博弈。各个数据集的详细信息如下表\ref{table_datasets2}所示：
@@ -75,7 +75,7 @@
 	\end{center}
 \end{table}
 
-为定量模拟数据拥有者和服务提供者在数据购买与模型训练阶段的博弈，本次实验考察了不同噪声添加下的数据所训练的模型质量，定量考察隐私保护与模型质量之间的关系，并进行函数拟合，结果如图\ref{fig_q_and_mul_minst}和\ref{fig_q_and_mul_xianxinghuigui}所示：
+为定量模拟数据拥有者和服务提供者在数据购买与模型训练阶段的博弈，本次实验考察了不同噪声添加下的数据所训练的模型质量，定量考察隐私保护与模型质量之间的关系，并进行函数拟合，结果如图\ref{fig_q_and_mul_minst}和\ref{figures_q_and_mul_xianxinghuigui}所示：
 
 
 \begin{figure}[H]
@@ -84,19 +84,25 @@
 	\label{fig_q_and_mul_minst}
 \end{figure}
 
-首先考察图\ref{fig_q_and_mul_minst}，图中横轴为训练用数据所添加的噪声乘量$mul$，$mul$越高，说明数据所添加的扰动强度越高，数据的隐私保护效果越好。纵轴为训练出来的模型质量，评判标准为准确率，单位为1\%。
-可以看到，随着噪声增强，模型的质量逐步下降，准确率从最初的97.5\%下降到82.5\%，说明隐私保护与模型质量不可兼得。同时注意到质量-噪声函数总体呈现下凸函数形，随着噪声的增加，准确率下降的速度越来越慢。是因为噪声具有边际效益递减特性：已添加的噪声越多，添加同样的噪声对模型的影响程度越来越小。
+首先考察图\ref{fig_q_and_mul_minst}，图中横轴为训练用数据所添加的噪声乘量$mul$，纵轴为训练出来的模型质量，评判标准为准确率，单位为1\%。实验结果表明，随着噪声乘量$mul$提高，原始数据所添加的扰动强度提高，数据的隐私保护效果提升，相应的所训练的深度学习模型的预测准确率降低，模型的质量逐步下降，，准确率从最初的97.5\%下降到82.5\%，说明隐私保护与模型质量不可兼得。同时注意到质量-噪声函数总体呈现下凸函数形，随着噪声的增加，准确率下降的速度越来越慢。是因为噪声具有边际递减特性：已添加的噪声越多，再添加等量的噪声对模型的影响程度越来越小。
 
+\begin{comment}
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=3.15in,height=1.98in]{fig/线性回归/输入/隐私保护强度-模型质量_线性回归模型.png}
 	\caption{YearPredictionMSD模型质量与噪声系数}
 	\label{fig_q_and_mul_xianxinghuigui}
 \end{figure}
-
-同时我们还使用然后考察了YearPredictionMSD模型质量与噪声系数的关系，见图\ref{fig_q_and_mul_xianxinghuigui}，实验使用高斯差分技术，图中横轴为训练用数据所添加的噪声乘量$\epsilon$的对数值，$\epsilon$越低，说明差分隐私的保护越严格，数据所添加的扰动强度越高，数据的隐私保护效果越好。纵轴为训练出来的模型质量，其中左子图纵轴为$R^2$分数，$R^2$分数越高，说明模型准确率越低，质量越差，右子图为$MSE$分数，$MSE$分数，说明模型质量越好。
+同时我们考察了YearPredictionMSD模型质量与噪声系数的关系，见图\ref{figures_q_and_mul_xianxinghuigui}，实验使用高斯差分技术，图\ref{fig_MSE_Exponential_short_Fitting}中横轴为训练用数据所添加的噪声乘量$\epsilon$的对数值，$\epsilon$越低，说明差分隐私的保护越严格，数据所添加的扰动强度越高，数据的隐私保护效果越好。纵轴为训练出来的模型质量，其中左子图纵轴为$R^2$分数，$R^2$分数越高，说明模型准确率越低，质量越差，右子图为$MSE$分数，$MSE$分数，说明模型质量越好。
 可以看到，随着噪声增强，模型的质量逐步下降。
 
+\end{comment}
+
+
+同时我们考察了YearPredictionMSD模型质量与高斯差分以及拉普拉斯差分的关系，见图\ref{figures_q_and_mul_xianxinghuigui}。
+图\ref{fig_MSE_Exponential_short_Fitting}和图\ref{fig_MSE_Polynomial_short_Fitting}描述了模型训练结果的均方误差（Mean Squared Error，MSE）损失函数关于噪声添加系数$\epsilon$的关系，横轴为所添加的噪声添加系数$\epsilon$，纵轴为MSE。MSE通过计算预测值和真实值之间的误差平方的平均值，来衡量模型的预测性能。MSE 越小，表示模型的预测越准确；MSE 越大，表示模型的预测误差越大，模型质量越差。
+图\ref{fig_R2_Exponential_short_Fitting}和图\ref{fig_R2_Polynomial_short_Fitting}描述了模型训练结果的决定系数($R^2$系数)关于噪声添加系数$\epsilon$的关系，横轴为所添加的噪声添加系数$\epsilon$，纵轴为$R^2$系数。$R^2$系数衡量模型对数据的拟合程度，取值范围通常在 0 到 1 之间。越接近 1，说明模型拟合效果越好。
+试验结果表明$\epsilon$越低，说明差分隐私的保护越严格，数据所添加的扰动强度越高，数据的隐私保护效果越好，所训练的模型质量越差。随着$\epsilon$的增加，噪声逐渐减弱，模型的质量逐步增加，并最终趋于一个定值。且从图\ref{fig_MSE_Exponential_short_Fitting}和图\ref{fig_R2_Exponential_short_Fitting}中可以看出，使用负指数函数$y=a-b\cdot e^{-c\cdot x}（a,b,c>0）$对添加拉普拉斯噪声的模型质量进行拟合结果最好，因此使用拉普拉斯噪声的负指数函数拟合结果作为$q-\epsilon$的关系函数进行后续实验。
 
 \subsubsection{对比方案}
 实验引入了贪心策略、无质疑策略等策略，并给出它们的伪代码，作为实验的对比机制。

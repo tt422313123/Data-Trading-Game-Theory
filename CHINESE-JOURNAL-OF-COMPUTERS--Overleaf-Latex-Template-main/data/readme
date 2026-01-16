@@ -116,3 +116,8 @@ latex编译时会产生aux等文件，我想忽略这些文件，请帮我生成
         \label{figures_q_and_mul_xianxinghuigui}
     \end{figure*}”
     我希望对每幅子图添加label，使得我可以在正文中单独引用每幅子图，例如“图X(a)”，请帮我修改上述代码
+
+我现在有如下需求：
+“
+    我将“Data-Trading-Game-Theory”目录上传到了github仓库，并且有了一份“Data-Trading-Game-Theory\.gitignore”文件，以忽略latex编译时产生的辅助文件，但是在更新GitHub仓库进行上传与下载时，发现有些辅助文件仍然被上传了，请帮我检查“.gitignore”文件内容，并帮我完善它，使得latex编译时产生的常见辅助文件均被忽略，不会被上传到GitHub仓库
+    ”
